@@ -19,152 +19,121 @@
     <body>
         <script type="text/javascript">
         
-	GameStates.Scene1State = function(game) {
-	};
+GameStates.LoadState = function(game) {
+};
+
+GameStates.LoadState.prototype = {
+	preload: function () {
+		this.load.image('knightrider', 'assets/knightrider.png');
+	},
+			
+	create: function () {		
+		this.game.stage.backgroundColor = "#009494";
+	},
 	
-	GameStates.Scene1State.prototype = {
-		preload: function () {
-			this.load.image('knightrider', 'assets/knightrider.png');
-		},
-				
-		create: function () {
-		
-			this.game.stage.backgroundColor = "#009494";
-		
-			this.graphics = this.game.add.graphics(0, 0);
-
-            this.game.input.keyboard.onDownCallback = null;		
-							
-			this.cursors = this.input.keyboard.createCursorKeys();			
-						
-			this.game.input.onUp.add(function() {
-				var me = TheGame.state.states.State1;
-			});
-
-			this.game.input.onDown.add(function() {
-				var me = TheGame.state.states.State1;
-			});		
-			
-			this.graphics.clear();
-			
-			var knightrider = this.add.sprite(100, 200, 'knightrider');
-				
-			this.textBalloon = new TextBalloon();				
-			this.textBalloon.arrowPosition = this.textBalloon.LOWER_LEFT;	
-			this.textBalloon.dialog = "Now we must choose my friend, this is the time that all good men must face.  We shall fight!";
-			this.textBalloon.addChoice("Do you agree with me?");	
-			this.textBalloon.addChoice("Or do you run?");	
-			this.textBalloon.addToGame(this.game, this.graphics, (knightrider.x + knightrider.width)-100, knightrider.y);
-			
-			this.textBalloon.chosen = function(index) {
-				var me = TheGame.state.states.State1;				
-				if (index == 0) {
-					TheGame.state.start('Scene2');
-				} else {
-					TheGame.state.start('Scene3');
-				}
-
-			};
-	
-		},
-		
-		update: function() {
-		}
-		
-	};
-        
-	GameStates.Scene2State = function(game) {
-	};
-	
-	GameStates.Scene2State.prototype = {
-		preload: function () {
-		},
-				
-		create: function () {
-		
-			this.game.stage.backgroundColor = "#009494";
-		
-			this.graphics = this.game.add.graphics(0, 0);
-
-            this.game.input.keyboard.onDownCallback = null;		
-							
-			this.cursors = this.input.keyboard.createCursorKeys();			
-						
-			this.game.input.onUp.add(function() {
-				var me = TheGame.state.states.State1;
-			});
-
-			this.game.input.onDown.add(function() {
-				var me = TheGame.state.states.State1;
-			});		
-			
-			this.graphics.clear();
-			
-			var knightrider = this.add.sprite(200, 200, 'knightrider');
-				
-			this.textBalloon = new TextBalloon();				
-			this.textBalloon.arrowPosition = this.textBalloon.LOWER_LEFT;	
-			this.textBalloon.dialog = "Well, we did it, we won, nice work!";
-			this.textBalloon.addToGame(this.game, this.graphics, (knightrider.x + knightrider.width)-100, knightrider.y);
-		},
-		
-		update: function() {
-		}
-		
-	};
-	
-	GameStates.Scene3State = function(game) {
-	};
-	
-	GameStates.Scene3State.prototype = {
-		preload: function () {
-		},
-				
-		create: function () {
-		
-			this.game.stage.backgroundColor = "#009494";
-		
-			this.graphics = this.game.add.graphics(0, 0);
-
-            this.game.input.keyboard.onDownCallback = null;		
-							
-			this.cursors = this.input.keyboard.createCursorKeys();			
-						
-			this.game.input.onUp.add(function() {
-				var me = TheGame.state.states.State1;
-			});
-
-			this.game.input.onDown.add(function() {
-				var me = TheGame.state.states.State1;
-			});		
-			
-			this.graphics.clear();
-			
-			var knightrider = this.add.sprite(400, 250, 'knightrider');
-			knightrider.anchor.setTo(.5, 0);
-			knightrider.scale.x *= -1;
-				
-			this.textBalloon = new TextBalloon();				
-			this.textBalloon.arrowPosition = this.textBalloon.LOWER_RIGHT;	
-			this.textBalloon.dialog = "We doth turned tail and ran.  Oh the shame";
-			this.textBalloon.addToGame(this.game, this.graphics, knightrider.x - 50, knightrider.y);
-		},
-		
-		update: function() {
-		}
-		
-	};
-	
-	window.onload = function() {
-		TheGame = new Phaser.Game("100", "100", Phaser.AUTO);
-		
-		TheGame.state.add('Scene1', GameStates.Scene1State);
-		TheGame.state.add('Scene2', GameStates.Scene2State);
-		TheGame.state.add('Scene3', GameStates.Scene3State);
-		
+	update: function() {
 		TheGame.state.start('Scene1');
-	};
-        
+	}
+	
+};
+	
+	
+GameStates.Scene1State = function(game) {
+};
+
+GameStates.Scene1State.prototype = {
+	preload: function () {
+	},
+			
+	create: function () {	
+		this.graphics = this.game.add.graphics(0, 0);
+		this.graphics.clear();
+		
+		var knightrider = this.add.sprite(100, 200, 'knightrider');
+			
+		var textBalloon = new TextBalloon();				
+		textBalloon.arrowPosition = textBalloon.LOWER_LEFT;	
+		textBalloon.dialog = "Now we must choose my friend, this is the time that all good men must face.  We shall fight!";
+		textBalloon.addChoice("Do you agree with me?");	
+		textBalloon.addChoice("Or do you run?");	
+		textBalloon.addToGame(this.game, this.graphics, (knightrider.x + knightrider.width)-100, knightrider.y);
+		
+		textBalloon.chosen = function(index) {
+			if (index == 0) {
+				TheGame.state.start('Scene2');
+			} else {
+				TheGame.state.start('Scene3');
+			}
+
+		};
+
+	},
+	
+	update: function() {
+	}
+	
+};
+	
+GameStates.Scene2State = function(game) {
+};
+
+GameStates.Scene2State.prototype = {
+	preload: function () {
+	},
+			
+	create: function () {	
+		this.graphics = this.game.add.graphics(0, 0);
+		this.graphics.clear();
+		
+		var knightrider = this.add.sprite(200, 200, 'knightrider');
+			
+		var textBalloon = new TextBalloon();				
+		textBalloon.arrowPosition = textBalloon.LOWER_LEFT;	
+		textBalloon.dialog = "Well, we did it, we won, nice work!";
+		textBalloon.addToGame(this.game, this.graphics, (knightrider.x + knightrider.width)-100, knightrider.y);
+	},
+	
+	update: function() {
+	}
+	
+};
+
+GameStates.Scene3State = function(game) {
+};
+
+GameStates.Scene3State.prototype = {
+	preload: function () {
+	},
+			
+	create: function () {	
+		this.graphics = this.game.add.graphics(0, 0);
+		this.graphics.clear();
+		
+		var knightrider = this.add.sprite(400, 250, 'knightrider');
+		knightrider.anchor.setTo(.5, 0);
+		knightrider.scale.x *= -1;
+			
+		var textBalloon = new TextBalloon();				
+		textBalloon.arrowPosition = textBalloon.LOWER_RIGHT;	
+		textBalloon.dialog = "We doth turned tail and ran.  Oh the shame";
+		textBalloon.addToGame(this.game, this.graphics, knightrider.x - 50, knightrider.y);
+	},
+	
+	update: function() {
+	}
+	
+};
+
+window.onload = function() {
+	TheGame = new Phaser.Game("100", "100", Phaser.AUTO);
+	
+	TheGame.state.add('Load', GameStates.LoadState);
+	TheGame.state.add('Scene1', GameStates.Scene1State);
+	TheGame.state.add('Scene2', GameStates.Scene2State);
+	TheGame.state.add('Scene3', GameStates.Scene3State);
+	
+	TheGame.state.start('Load');
+};        
         
         </script>
     </body>
